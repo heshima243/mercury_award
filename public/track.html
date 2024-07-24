@@ -10,7 +10,7 @@
             const uuid = window.location.pathname.split('/').pop();
             const { latitude, longitude } = position.coords;
 
-            fetch('https://geo-localisation.onrender.com/location', {
+            fetch('https://geo-localisation.onrender.com/api/location', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
