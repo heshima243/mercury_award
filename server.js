@@ -34,7 +34,7 @@ app.get('/track/:uuid', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'track.html'));
 });
 
-app.post('/api/location', async (req, res) => {
+app.post('/location', async (req, res) => {
     const { uuid, latitude, longitude } = req.body;
     const newLocation = new Location({ uuid, latitude, longitude, timestamp: new Date() });
     
