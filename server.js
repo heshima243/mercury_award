@@ -24,8 +24,10 @@ const locationSchema = new mongoose.Schema({
 
 const Location = mongoose.model('Location', locationSchema);
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/track/:uuid', (req, res) => {
-    res.sendFile(path.join(__dirname, 'track.html'));
+    res.sendFile(path.join(__dirname, 'public', 'track.html'));
 });
 
 app.post('/location', async (req, res) => {
