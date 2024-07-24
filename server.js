@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: ['https://vimeo-seven.vercel.app/'],
+    origin: ['https://vimeo-seven.vercel.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   }));
 
