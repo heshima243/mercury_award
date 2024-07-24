@@ -6,7 +6,11 @@ const path = require('path');
 
 const app = express();
 app.use(bodyParser.json());
-app.use(cors({ origin: 'https://vimeo-seven.vercel.app' }));
+
+app.use(cors({
+    origin: ['https://vimeo-seven.vercel.app/'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  }));
 
 const mongoURI = "mongodb+srv://heshimajulienofficial:gZo66bAOKJBetFSQ@localisation.st4rgvh.mongodb.net/?retryWrites=true&w=majority&appName=localisation";
 const port = process.env.PORT || 3000;
