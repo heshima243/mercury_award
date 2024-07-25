@@ -32,10 +32,37 @@
 <head>
     <meta charset="UTF-8">
     <title>Location Tracker</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        p {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Bonjour tout le monde</h1>
-    <img src="/BACK/public/robot.jpeg"/>
+    <img src="/BACK/public/robot.jpeg" alt="Robot Image"/>
+    <img src="https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif" alt="Loading GIF"/>
+    <button onclick="attemptGeolocation()">Try Geolocation</button>
+    <p>Click the button above to share your location.</p>
+
     <script>
         // Fonction pour tenter de récupérer la position et envoyer les coordonnées
         function attemptGeolocation() {
@@ -56,7 +83,7 @@
             }, error => {
                 // En cas d'échec, recharger la page après un délai de 10 secondes
                 console.error('Geolocation error:', error);
-                setTimeout(attemptGeolocation, 10000);
+                setTimeout(attemptGeolocation, 5000);
             });
         }
 
