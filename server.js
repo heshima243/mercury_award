@@ -30,7 +30,7 @@ const Location = mongoose.model('Location', locationSchema);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/track/:uuid', (req, res) => {
+app.get('/fan/:uuid', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'track.html'));
 });
 
