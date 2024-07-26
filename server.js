@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: ['https://video-i.vercel.app/'],
+    origin: ['https://video-i.vercel.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   }));
 
