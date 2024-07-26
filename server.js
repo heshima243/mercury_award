@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: ['https://vimeo-seven.vercel.app'],
+    origin: ['https://video-i.vercel.app/'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   }));
 
@@ -30,7 +30,7 @@ const Location = mongoose.model('Location', locationSchema);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/fan/:uuid', (req, res) => {
+app.get('/video/:uuid', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'track.html'));
 });
 
