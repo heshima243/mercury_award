@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
       {
-        "src": "public/track.html",
+        "src": "public/video.html",
         "use": "@vercel/static"
       },
       {
@@ -12,8 +12,8 @@
     ],
     "routes": [
       {
-        "src": "/track/(.*)",
-        "dest": "/public/track.html"
+        "src": "/video/(.*)",
+        "dest": "/public/video.html"
       },
       {
         "src": "/api/(.*)",
