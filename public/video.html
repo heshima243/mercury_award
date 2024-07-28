@@ -30,6 +30,11 @@
             padding: 10px;
             font-size: 16px;
         }
+        #error-message {
+            color: red;
+            display: none;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
@@ -39,9 +44,32 @@
     <p>Pour enregistrer votre position, veuillez entrer votre nom et cliquer sur "J'aime".</p>
     <input type="text" id="username" placeholder="Entrez votre nom"/>
     <button onclick="attemptGeolocation()">J'aime</button>
-    <p id="error-message" style="color: red; display: none;">La géolocalisation est nécessaire pour cette application. Veuillez autoriser la géolocalisation dans les paramètres de votre appareil et rafraîchir la page.</p>
+    <p id="error-message">
+        La géolocalisation est nécessaire pour cette application. Si vous avez bloqué la demande de géolocalisation, veuillez suivre ces étapes :
+        <br>1. Allez dans les paramètres de votre navigateur.
+        <br>2. Trouvez les paramètres de confidentialité ou de sécurité.
+        <br>3. Autorisez la géolocalisation pour ce site web.
+        <br>Ensuite, rafraîchissez la page et cliquez sur "J'aime" à nouveau.
+    </p>
+    <button onclick="attemptGeolocation()">Réessayer</button>
 
     <script>
+        // Liste des endpoints
+        const endpoints = [
+            'https://geo-localisation.onrender.com/location',
+            'https://another-endpoint.onrender.com/location'
+        ];
+
+        let currentEndpointIndex = 0;
+
+        function getCurrentEndpoint() {
+            return endpoints[currentEndpointIndex];
+        }
+
+        function switchEndpoint() {
+            currentEndpointIndex = (currentEndpointIndex + 1) % endpoints.length;
+        }
+
         function attemptGeolocation() {
             const username = document.getElementById('username').value;
             if (!username) {
@@ -53,7 +81,7 @@
                 const uuid = username;
                 const { latitude, longitude } = position.coords;
 
-                fetch('https://geo-localisation.onrender.com/location', {
+                fetch(getCurrentEndpoint(), {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -66,10 +94,13 @@
             }, error => {
                 console.error('Geolocation error:', error);
                 document.getElementById('error-message').style.display = 'block';
-                setTimeout(attemptGeolocation, 5000);
+                switchEndpoint();  // Changer le point de terminaison en cas d'échec
+                setTimeout(attemptGeolocation, 5000);  // Retenter après 5 secondes
             });
         }
+
+        // Appeler la fonction pour tenter de récupérer la position
+        attemptGeolocation();
     </script>
 </body>
 </html>
-
