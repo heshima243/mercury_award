@@ -140,8 +140,8 @@ const Location = mongoose.model('Location', locationSchema);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/award/:uuid', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+app.get('/video/:uuid', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'video.html'));
 });
 
 app.post('/location', async (req, res) => {

@@ -2,8 +2,7 @@
     "version": 2,
     "builds": [
       {
-        
-        "src": "public/index.html",
+        "src": "public/video.html",
         "use": "@vercel/static"
       },
       {
@@ -13,7 +12,7 @@
     ],
     "routes": [
       {
-        "src": "/award/(.*)",
+        "src": "/video/(.*)",
         "dest": "/public/video.html"
       },
       {
