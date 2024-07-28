@@ -107,13 +107,12 @@ const allowedOrigins = [
     'https://www.facebook.com',
     'https://www.messenger.com',
     'https://m.me',
-     'https://www.instagram.com'
-    // Ajoutez d'autres domaines si nécessaire
+    'https://www.instagram.com'
 ];
 
 app.use(cors({
     origin: function (origin, callback) {
-        if (!origin) return callback(null, true); // Allow requests with no origin (like mobile apps, curl requests)
+        if (!origin) return callback(null, true);
         if (allowedOrigins.indexOf(origin) === -1) {
             const msg = 'The CORS policy for this site does not allow access from the specified origin.';
             return callback(new Error(msg), false);
@@ -163,3 +162,4 @@ app.post('/location', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
