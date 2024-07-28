@@ -104,6 +104,7 @@ app.use(bodyParser.json());
 
 const allowedOrigins = [
     'https://video-i.vercel.app',
+    'mercury-award.vercel.app',
     'https://www.facebook.com',
     'https://www.messenger.com',
     'https://m.me',
