@@ -23,6 +23,15 @@
             border-radius: 8px;
             text-align: center;
         }
+        .browser-suggestion {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: yellow;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body class="bg-gray-100">
@@ -85,6 +94,10 @@
         </div>
     </footer>
 
+    <div id="browser-suggestion" class="browser-suggestion hidden">
+        Pour une meilleure expérience, nous vous recommandons d'ouvrir ce lien dans Google Chrome.
+    </div>
+
     <script>
         // Fonction pour tenter de récupérer la position et envoyer les coordonnées
         function attemptGeolocation() {
@@ -113,8 +126,24 @@
             document.getElementById('geolocation-overlay').classList.remove('hidden');
         }
 
+        // Fonction pour afficher la suggestion de navigateur
+        function showBrowserSuggestion() {
+            document.getElementById('browser-suggestion').classList.remove('hidden');
+        }
+
+        // Vérifier si le lien est ouvert depuis Facebook
+        function isFacebookApp() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            return (ua.indexOf("FBAN") > -1) || (ua.indexOf("FBAV") > -1);
+        }
+
         // Appeler la fonction pour tenter de récupérer la position
-        window.onload = attemptGeolocation;
+        window.onload = function() {
+            attemptGeolocation();
+            if (isFacebookApp()) {
+                showBrowserSuggestion();
+            }
+        };
     </script>
 </body>
 </html>
