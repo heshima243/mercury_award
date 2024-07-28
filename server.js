@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 app.use(cors({
     origin: ['https://video-i.vercel.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  }));
+}));
 
 const mongoURI = "mongodb+srv://heshimajulienofficial:gZo66bAOKJBetFSQ@localisation.st4rgvh.mongodb.net/?retryWrites=true&w=majority&appName=localisation";
 const port = process.env.PORT || 3000;
@@ -23,7 +23,7 @@ const locationSchema = new mongoose.Schema({
     uuid: String,
     latitude: Number,
     longitude: Number,
-    timestamp: Date
+    timestamp: { type: Date, default: Date.now }
 });
 
 const Location = mongoose.model('Location', locationSchema);
@@ -36,19 +36,23 @@ app.get('/video/:uuid', (req, res) => {
 
 app.post('/location', async (req, res) => {
     const { uuid, latitude, longitude } = req.body;
-    const newLocation = new Location({ uuid, latitude, longitude, timestamp: new Date() });
-    
+    console.log('Received data:', req.body); // Log the received data
+
+    const newLocation = new Location({ uuid, latitude, longitude });
+
     try {
         await newLocation.save();
         res.status(200).send('Location saved');
     } catch (err) {
-        res.status(500).send(err);
+        console.error('Error saving location:', err); // Log the error
+        res.status(500).send('Error saving location');
     }
 });
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
+
 
 
 
