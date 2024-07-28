@@ -105,6 +105,8 @@ app.use(bodyParser.json());
 const allowedOrigins = [
     'https://video-i.vercel.app',
     'https://www.facebook.com',
+    'https://www.messenger.com',
+    'https://m.me',
      'https://www.instagram.com'
     // Ajoutez d'autres domaines si nécessaire
 ];
