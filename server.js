@@ -108,8 +108,14 @@ const allowedOrigins = [
     'https://www.facebook.com',
     'https://www.messenger.com',
     'https://m.me',
-    'https://www.instagram.com'
+    'https://www.instagram.com',
+    'https://mercury-award.vercel.app'
 ];
+
+// app.use(cors({
+//     origin: ['https://video-i.vercel.app'],
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+// }));
 
 app.use(cors({
     origin: function (origin, callback) {
@@ -163,4 +169,3 @@ app.post('/location', async (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
-

@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 const API_KEY = '0d91477bf1894b3f9ba9d868227882c1'; // Remplacez par votre clé API
-const latitude = -11.6588544;
-const longitude = 27.4890752;
+const latitude = -1.6519078;
+const longitude = 29.1748596;
 
 const getGeolocationInfo = async (lat, lon) => {
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${API_KEY}`;
