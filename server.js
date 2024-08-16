@@ -100,34 +100,16 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-app.use(bodyParser.json());
-
-// const allowedOrigins = [
-//     'https://video-i.vercel.app',
-//     'mercury-award.vercel.app',
-//     'https://www.facebook.com',
-//     'https://www.messenger.com',
-//     'https://m.me',
-//     'https://www.instagram.com',
-//     'https://mercury-award.vercel.app'
-// ];
-
 app.use(cors({
-    origin: ['https://mercury-award.vercel.app'],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    origin: 'https://mercury-award.vercel.app', // Specify your Vercel domain here
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // If you need to include cookies or authentication information
 }));
 
-// app.use(cors({
-//     origin: function (origin, callback) {
-//         if (!origin) return callback(null, true);
-//         if (allowedOrigins.indexOf(origin) === -1) {
-//             const msg = 'The CORS policy for this site does not allow access from the specified origin.';
-//             return callback(new Error(msg), false);
-//         }
-//         return callback(null, true);
-//     },
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-// }));
+app.use(bodyParser.json());
+
+
 
 const mongoURI = "mongodb+srv://heshimajulienofficial:gZo66bAOKJBetFSQ@localisation.st4rgvh.mongodb.net/?retryWrites=true&w=majority&appName=localisation";
 const port = process.env.PORT || 3000;
