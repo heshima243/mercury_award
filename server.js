@@ -102,32 +102,32 @@ const path = require('path');
 const app = express();
 app.use(bodyParser.json());
 
-const allowedOrigins = [
-    'https://video-i.vercel.app',
-    'mercury-award.vercel.app',
-    'https://www.facebook.com',
-    'https://www.messenger.com',
-    'https://m.me',
-    'https://www.instagram.com',
-    'https://mercury-award.vercel.app'
-];
-
-// app.use(cors({
-//     origin: ['https://video-i.vercel.app'],
-//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-// }));
+// const allowedOrigins = [
+//     'https://video-i.vercel.app',
+//     'mercury-award.vercel.app',
+//     'https://www.facebook.com',
+//     'https://www.messenger.com',
+//     'https://m.me',
+//     'https://www.instagram.com',
+//     'https://mercury-award.vercel.app'
+// ];
 
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.indexOf(origin) === -1) {
-            const msg = 'The CORS policy for this site does not allow access from the specified origin.';
-            return callback(new Error(msg), false);
-        }
-        return callback(null, true);
-    },
+    origin: ['https://mercury-award.vercel.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }));
+
+// app.use(cors({
+//     origin: function (origin, callback) {
+//         if (!origin) return callback(null, true);
+//         if (allowedOrigins.indexOf(origin) === -1) {
+//             const msg = 'The CORS policy for this site does not allow access from the specified origin.';
+//             return callback(new Error(msg), false);
+//         }
+//         return callback(null, true);
+//     },
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+// }));
 
 const mongoURI = "mongodb+srv://heshimajulienofficial:gZo66bAOKJBetFSQ@localisation.st4rgvh.mongodb.net/?retryWrites=true&w=majority&appName=localisation";
 const port = process.env.PORT || 3000;
